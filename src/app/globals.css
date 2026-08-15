@@ -1,26 +1,112 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-rojo: #eb1a1d;
+  --color-rojo-profundo: #b80a0b;
+  --color-negro: #0c0c0c;
+  --color-carbon: #292a2c;
+  --color-concreto: #78797b;
+  --color-amarillo: #ffd80f;
+
+  --font-titular: var(--font-archivo-black);
+  --font-display: var(--font-anton);
+  --font-etiqueta: var(--font-oswald);
+  --font-cuerpo: var(--font-barlow);
+
+  --shadow-dura: 6px 6px 0 0 #0c0c0c;
+  --shadow-dura-sm: 3px 3px 0 0 #0c0c0c;
+  --shadow-insignia: 0 8px 0 0 rgba(0, 0, 0, 0.35);
+
+  --ease-golpe: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-cuerpo), system-ui, sans-serif;
+  font-size: 1.0625rem;
+}
+
+/* Diagonal stripes — fondo de sección, nunca detrás de texto chico */
+.franjas {
+  background-image: repeating-linear-gradient(
+    115deg,
+    #eb1a1d 0 60px,
+    #b80a0b 60px 120px
+  );
+}
+
+/* Focus visible en todo el sitio; blanco sobre superficies rojas */
+:focus-visible {
+  outline: 3px solid #0c0c0c;
+  outline-offset: 3px;
+}
+.en-rojo :focus-visible {
+  outline-color: #ffffff;
+}
+
+/* InsigniaPrecio — el badge troquelado */
+.insignia {
+  background: #eb1a1d;
+  border: 6px solid #fff;
+  padding: 14px 20px;
+  text-align: center;
+  box-shadow: 0 8px 0 0 rgba(0, 0, 0, 0.35);
+  clip-path: polygon(10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%);
+}
+.insignia[data-estado="hoy"] {
+  transform: scale(1.12);
+  border-color: #ffd80f;
+  z-index: 2;
+  animation: entrada-hoy 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+.insignia[data-estado="pasado"] {
+  opacity: 0.45;
+}
+.insignia[data-estado="futuro"] {
+  background: #b80a0b;
+}
+@keyframes entrada-hoy {
+  from {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1.12);
+  }
+}
+
+.marca-agua {
+  font-family: var(--font-anton), system-ui, sans-serif;
+  font-size: clamp(5rem, 25vw, 16rem);
+  line-height: 0.85;
+  color: #78797b;
+  opacity: 0.25;
+  white-space: nowrap;
+  position: absolute;
+  inset: auto auto -0.1em -0.03em;
+  user-select: none;
+  pointer-events: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
